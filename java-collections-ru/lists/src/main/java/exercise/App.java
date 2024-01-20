@@ -1,9 +1,6 @@
 package exercise;
-
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 public class App {
     public static boolean scrabble(String str, String word) {
         var strs = str.split("");
@@ -24,8 +21,7 @@ public class App {
         }
         if (listOfWords.isEmpty()) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
