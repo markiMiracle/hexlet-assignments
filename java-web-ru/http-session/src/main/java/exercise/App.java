@@ -1,8 +1,6 @@
 package exercise;
 
 import io.javalin.Javalin;
-import org.eclipse.jetty.server.Authentication;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
