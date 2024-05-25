@@ -4,14 +4,12 @@ import io.javalin.Javalin;
 import java.util.List;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
-import io.javalin.http.NotFoundResponse;
 import io.javalin.rendering.template.JavalinJte;
 import exercise.model.User;
 import exercise.dto.users.UsersPage;
 import exercise.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import exercise.util.Security;
-import org.eclipse.jetty.util.security.SecurityUtils;
 
 public final class App {
 
