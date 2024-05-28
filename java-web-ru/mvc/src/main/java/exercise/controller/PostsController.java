@@ -73,7 +73,7 @@ public class PostsController {
                     .check(value -> value.length() >= 2, "Название не должно быть короче двух символов")
                     .get();
             var body = ctx.formParamAsClass("body", String.class)
-                    .check(value -> value.length() >=2, "Пост должен быть не короче 10 символов")
+                    .check(value -> value.length() >= 2, "Пост должен быть не короче 10 символов")
                     .get();
             var post = PostRepository.find(id).orElseThrow(() -> new NotFoundResponse("Post not found"));
             post.setName(name);
