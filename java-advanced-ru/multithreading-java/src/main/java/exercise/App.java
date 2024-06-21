@@ -13,14 +13,25 @@ class App {
         var maxThread = new MaxThread(array);
         var minThread = new MinThread(array);
 
-        minThread.run();
-        maxThread.run();
         minThread.setName("firstThread");
         maxThread.setName("secondThread");
 
+        minThread.start();
+        LOGGER.log(Level.INFO, "Thread " + minThread.getName() + " started");
 
-        LOGGER.info(minThread.getName());
-        LOGGER.info(maxThread.getName());
+        maxThread.start();
+        LOGGER.log(Level.INFO, "Thread " + maxThread.getName() + " started");
+
+
+        try {
+            minThread.join();
+            LOGGER.log(Level.INFO, "Thread " + minThread.getName() + " finished");
+            maxThread.join();
+            LOGGER.log(Level.INFO, "Thread " + maxThread.getName() + " finished");
+        } catch (InterruptedException e) {
+            System.out.println("Поток был прерван");
+        }
+
 
         var map = new HashMap<String, Integer>();
         map.put("min", minThread.getMin());
