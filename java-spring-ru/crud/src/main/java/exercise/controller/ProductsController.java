@@ -47,32 +47,24 @@ public class ProductsController {
     }
 
     @GetMapping("/{id}")
-    public ProductDTO show(@PathVariable("id") String id) {
-        var product = productRepository.findById(Long.parseLong(id))
-                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
-        var dto = productMapper.map(product);
-        dto.setCategoryName(product.getCategory().getName());
-        return dto;
+    public ProductDTO show(@PathVariable("id") Long id) {
+        return productMapper.map(productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found")));
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@RequestBody ProductCreateDTO dto) {
-        if (categoryRepository.findById(dto.getCategoryId()).isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDTO create(@RequestBody ProductCreateDTO dto) {
         Product product = productMapper.map(dto);
         productRepository.save(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productMapper.map(product));
+        return productMapper.map(product);
     }
 
     @PutMapping("/{id}")
-    public ProductDTO update(@PathVariable("id") String id, @RequestBody ProductUpdateDTO dto) {
-        var product = productRepository.findById(Long.parseLong(id))
-                .orElseThrow(() -> new ResourceNotFoundException("Product with id " + id + " not found"));
-        productMapper.update(dto, product);
-        Long categoryId = dto.getCategoryId().get();
-        var category = categoryRepository.findById(categoryId).get();
-        product.setCategory(category);
+    public ProductDTO update(@PathVariable("id") Long id, @RequestBody ProductUpdateDTO productData) {
+        var product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not Found: " + id));
+        productMapper.update(productData, product);
         productRepository.save(product);
         return productMapper.map(product);
     }
